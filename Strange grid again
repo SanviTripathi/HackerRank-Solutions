@@ -1,0 +1,9 @@
+long long strangeGrid(long long r, long long c) {
+    long long block=(r-1)/2;
+    long long base=block*10LL;
+    long long offset=(c-1)*2LL;
+    if(r%2==0)
+    return base+offset+1LL;
+    else
+    return base+offset;
+}
