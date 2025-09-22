@@ -1,0 +1,15 @@
+def counterGame(n):
+        cnt=0
+        while n>=1:
+            if(n&(n-1)==0):
+                n=n>>1
+                cnt+=1
+            else:
+                k=int(math.log(n,2))
+                num=1<<k
+                n=n-num
+                cnt+=1
+        if cnt%2==1:
+            return "Richard"
+        else:
+             return "Louise"
