@@ -1,0 +1,67 @@
+import java.io.*;
+import java.util.*;
+import java.util.stream.*;
+
+class Result {  
+
+    public static int equalStacks(List<Integer> h1, List<Integer> h2, List<Integer> h3) {
+        // Compute initial heights of the stacks
+        int sum1 = h1.stream().mapToInt(Integer::intValue).sum();
+        int sum2 = h2.stream().mapToInt(Integer::intValue).sum();
+        int sum3 = h3.stream().mapToInt(Integer::intValue).sum();
+
+        // Use index pointers to track elements removed
+        int i = 0, j = 0, k = 0;
+
+        while (i < h1.size() && j < h2.size() && k < h3.size()) {
+            // If all three heights are equal, return that height
+            if (sum1 == sum2 && sum2 == sum3) {
+                return sum1;
+            }
+
+            // Remove element from the stack with the maximum height
+            if (sum1 >= sum2 && sum1 >= sum3) {
+                sum1 -= h1.get(i++);
+            } else if (sum2 >= sum1 && sum2 >= sum3) {
+                sum2 -= h2.get(j++);
+            } else {
+                sum3 -= h3.get(k++);
+            }
+        }
+
+        return 0; // If no common height is found
+    }
+}
+
+public class Solution {
+    public static void main(String[] args) throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(System.out));
+
+        String[] firstMultipleInput = bufferedReader.readLine().replaceAll("\\s+$", "").split(" ");
+
+        int n1 = Integer.parseInt(firstMultipleInput[0]);
+        int n2 = Integer.parseInt(firstMultipleInput[1]);
+        int n3 = Integer.parseInt(firstMultipleInput[2]);
+
+        List<Integer> h1 = Stream.of(bufferedReader.readLine().replaceAll("\\s+$", "").split(" "))
+            .map(Integer::parseInt)
+            .collect(Collectors.toList());
+
+        List<Integer> h2 = Stream.of(bufferedReader.readLine().replaceAll("\\s+$", "").split(" "))
+            .map(Integer::parseInt)
+            .collect(Collectors.toList());
+
+        List<Integer> h3 = Stream.of(bufferedReader.readLine().replaceAll("\\s+$", "").split(" "))
+            .map(Integer::parseInt)
+            .collect(Collectors.toList());
+
+        int result = Result.equalStacks(h1, h2, h3);
+
+        bufferedWriter.write(String.valueOf(result));
+        bufferedWriter.newLine();
+
+        bufferedReader.close();
+        bufferedWriter.close();
+    }
+}
